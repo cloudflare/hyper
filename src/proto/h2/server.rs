@@ -162,6 +162,7 @@ where
     S: HttpService<Body, ResBody = B>,
     S::Error: Into<Box<dyn StdError + Send + Sync>>,
     B: HttpBody + 'static,
+    B::Data: Send,
     E: ConnStreamExec<S::Future, B>,
 {
     type Output = crate::Result<Dispatched>;
@@ -206,6 +207,7 @@ impl<T, B> Serving<T, B>
 where
     T: AsyncRead + AsyncWrite + Unpin,
     B: HttpBody + 'static,
+    B::Data: Send,
 {
     fn poll_server<S, E>(
         &mut self,
@@ -364,6 +366,7 @@ impl<F, B, E> H2Stream<F, B>
 where
     F: Future<Output = Result<Response<B>, E>>,
     B: HttpBody,
+    B::Data: Send + 'static,
     B::Error: Into<Box<dyn StdError + Send + Sync>>,
     E: Into<Box<dyn StdError + Send + Sync>>,
 {
@@ -428,6 +431,7 @@ impl<F, B, E> Future for H2Stream<F, B>
 where
     F: Future<Output = Result<Response<B>, E>>,
     B: HttpBody,
+    B::Data: Send + 'static,
     B::Error: Into<Box<dyn StdError + Send + Sync>>,
     E: Into<Box<dyn StdError + Send + Sync>>,
 {

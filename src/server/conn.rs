@@ -615,6 +615,7 @@ where
     S::Error: Into<Box<dyn StdError + Send + Sync>>,
     I: AsyncRead + AsyncWrite + Unpin,
     B: HttpBody + 'static,
+    B::Data: Send,
     B::Error: Into<Box<dyn StdError + Send + Sync>>,
     E: ConnStreamExec<S::Future, B>,
 {
@@ -772,6 +773,7 @@ where
     S::Error: Into<Box<dyn StdError + Send + Sync>>,
     I: AsyncRead + AsyncWrite + Unpin + 'static,
     B: HttpBody + 'static,
+    B::Data: Send,
     B::Error: Into<Box<dyn StdError + Send + Sync>>,
     E: ConnStreamExec<S::Future, B>,
 {
@@ -978,6 +980,7 @@ where
     S: HttpService<Body, ResBody = B>,
     S::Error: Into<Box<dyn StdError + Send + Sync>>,
     B: HttpBody + 'static,
+    B::Data: Send,
     B::Error: Into<Box<dyn StdError + Send + Sync>>,
     E: ConnStreamExec<S::Future, B>,
 {
@@ -1028,6 +1031,7 @@ pub(crate) mod spawn_all {
         S: HttpService<Body>,
         E: ConnStreamExec<S::Future, S::ResBody>,
         S::ResBody: 'static,
+        <S::ResBody as HttpBody>::Data: Send,
         <S::ResBody as HttpBody>::Error: Into<Box<dyn StdError + Send + Sync>>,
     {
         type Future = UpgradeableConnection<I, S, E>;
@@ -1075,6 +1079,7 @@ pub(crate) mod spawn_all {
         NE: Into<Box<dyn StdError + Send + Sync>>,
         S: HttpService<Body, ResBody = B>,
         B: HttpBody + 'static,
+        B::Data: Send,
         B::Error: Into<Box<dyn StdError + Send + Sync>>,
         E: ConnStreamExec<S::Future, B>,
         W: Watcher<I, S, E>,
@@ -1141,6 +1146,7 @@ mod upgrades {
         S::Error: Into<Box<dyn StdError + Send + Sync>>,
         I: AsyncRead + AsyncWrite + Unpin,
         B: HttpBody + 'static,
+        B::Data: Send,
         B::Error: Into<Box<dyn StdError + Send + Sync>>,
         E: ConnStreamExec<S::Future, B>,
     {
@@ -1159,6 +1165,7 @@ mod upgrades {
         S::Error: Into<Box<dyn StdError + Send + Sync>>,
         I: AsyncRead + AsyncWrite + Unpin + Send + 'static,
         B: HttpBody + 'static,
+        B::Data: Send,
         B::Error: Into<Box<dyn StdError + Send + Sync>>,
         E: ConnStreamExec<S::Future, B>,
     {

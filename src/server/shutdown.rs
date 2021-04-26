@@ -51,6 +51,7 @@ where
     S: MakeServiceRef<IO, Body, ResBody = B>,
     S::Error: Into<Box<dyn StdError + Send + Sync>>,
     B: HttpBody + Send + Sync + 'static,
+    B::Data: Send,
     B::Error: Into<Box<dyn StdError + Send + Sync>>,
     F: Future<Output = ()>,
     E: ConnStreamExec<<S::Service as HttpService<Body>>::Future, B>,
@@ -98,6 +99,7 @@ where
     S: HttpService<Body>,
     E: ConnStreamExec<S::Future, S::ResBody>,
     S::ResBody: Send + Sync + 'static,
+    <S::ResBody as HttpBody>::Data: Send,
     <S::ResBody as HttpBody>::Error: Into<Box<dyn StdError + Send + Sync>>,
 {
     type Future =
@@ -114,6 +116,7 @@ where
     S::Error: Into<Box<dyn StdError + Send + Sync>>,
     I: AsyncRead + AsyncWrite + Unpin,
     S::ResBody: HttpBody + Send + 'static,
+    <S::ResBody as HttpBody>::Data: Send,
     <S::ResBody as HttpBody>::Error: Into<Box<dyn StdError + Send + Sync>>,
     E: ConnStreamExec<S::Future, S::ResBody>,
 {
