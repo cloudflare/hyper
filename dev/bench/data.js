@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1726801581972,
+  "lastUpdate": 1726801606144,
   "repoUrl": "https://github.com/cloudflare/hyper",
   "entries": {
     "connect": [
@@ -4739,6 +4739,34 @@ window.BENCHMARK_DATA = {
             "name": "hello_world_16",
             "value": 65724,
             "range": "± 8905",
+            "unit": "ns/iter"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "hrushikeshdeshpande@github.com",
+            "name": "Hrushikesh Deshpande"
+          },
+          "committer": {
+            "email": "hrushikeshdeshpande@github.com",
+            "name": "Hrushikesh Deshpande"
+          },
+          "distinct": true,
+          "id": "2c712e65c7ab41f74916bb17802c12e81f4f6273",
+          "message": "Adding semgrep yaml file",
+          "timestamp": "2024-09-19T21:55:18-04:00",
+          "tree_id": "0c5ab755e4beb915935ee7ccfc980357cb69a8c2",
+          "url": "https://github.com/cloudflare/hyper/commit/2c712e65c7ab41f74916bb17802c12e81f4f6273"
+        },
+        "date": 1726801604520,
+        "tool": "cargo",
+        "benches": [
+          {
+            "name": "hello_world_16",
+            "value": 50199,
+            "range": "± 10016.54",
             "unit": "ns/iter"
           }
         ]
